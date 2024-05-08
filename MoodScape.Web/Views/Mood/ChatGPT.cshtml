@@ -1,0 +1,24 @@
+﻿@model MoodScape.Web.ViewModels.ConversationVM
+@{
+    ViewData["Title"] = "Insights with ChatGPT";
+}
+
+<section class="mood-insights-container">
+    <div class="container">
+        <h2 class="text-center">Conversation with ChatGPT</h2>
+        <div class="conversation-container mt-4">
+            @if (!string.IsNullOrWhiteSpace(Model.ChatResponse))
+            {
+                <div class="chat-response bg-light p-4 rounded shadow-sm">
+                    <h4>ChatGPT's Insights:</h4>
+                    <pre class="chat-text">@Model.ChatResponse</pre>
+                </div>
+            }
+            else
+            {
+                <p>No conversation to display. Please go back and select a mood entry to start the conversation.</p>
+            }
+            <a href="@Url.Action("Index", "Mood")" class="btn btn-primary mt-3">Back to your Mood Diary</a>
+        </div>
+    </div>
+</section>

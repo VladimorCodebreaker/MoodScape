@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MoodScape.Web.ViewModels.GoalVM>
+
+@{
+    ViewData["Title"] = "🎯 Your Goal Entries 🎯";
+}
+
+<video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" class="video-background">
+    <source src="~/assets/animation6.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<div class="container">
+    <div class="goals-container my-5">
+        <h2 class="text-center goal-title">Goal Journal</h2>
+        <div class="container">
+            @foreach (var goal in Model)
+            {
+                <div class="goal-entry p-4 mb-4">
+                    <div class="goal-header d-flex justify-content-between align-items-center">
+                        <h3 class="goal-name">@goal.Name</h3>
+                        <div>
+                            <a asp-action="Update" asp-route-id="@goal.Id" class="btn btn-goal-edit">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@goal.Id" class="btn btn-goal-delete">Delete</a>
+                        </div>
+                    </div>
+                    <p class="goal-description">@goal.Description</p>
+                    <div class="goal-footer d-flex justify-content-between align-items-center">
+                        <p class="goal-deadline">Deadline: @(goal.Deadline == DateTime.MinValue ? "No deadline" : goal.Deadline.ToString("dd MMM yyyy"))</p>
+                        <span class="goal-status" style="color:#fff;">@goal.Status</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_CreateItem", "Goal")

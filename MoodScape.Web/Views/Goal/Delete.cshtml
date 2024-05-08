@@ -1,0 +1,33 @@
+﻿@model MoodScape.Web.ViewModels.GoalVM
+
+@{
+    ViewData["Title"] = "🍍 Delete Goal 🍍";
+}
+
+<h2 class="text-center my-5">Delete Goal Entry</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card card-body bg-light shadow mb-5">
+                <h4 class="text-center text-danger mb-4">Are you sure you want to delete this goal entry?</h4>
+
+                <div class="alert alert-warning" role="alert">
+                    <strong>Name:</strong> @Model.Name <br />
+                    <strong>Description:</strong> @Model.Description <br />
+                    <strong>Deadline:</strong> @Model.Deadline.ToString("g") <br />
+                    <strong>Status:</strong> @Model.Status
+                </div>
+
+                <!-- Confirmation Form -->
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group text-center mb-4">
+                        <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

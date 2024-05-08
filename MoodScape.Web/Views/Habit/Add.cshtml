@@ -1,0 +1,54 @@
+﻿@using MoodScape.Data.Enums
+@model MoodScape.Web.ViewModels.HabitVM
+
+@{
+    ViewData["Title"] = "🌷 Add Habit 🌷";
+}
+
+<h2 class="text-center my-5">Create a New Habit</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Add" method="post" class="card card-body bg-light shadow p-4 mb-5">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+
+                <!-- Name Field -->
+                <div class="form-group mb-4">
+                    <label asp-for="Name" class="control-label">Habit Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter habit name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <!-- Description Field -->
+                <div class="form-group mb-4">
+                    <label asp-for="Description" class="control-label">Description (Optional)</label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Describe your habit"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <!-- Frequency Field -->
+                <div class="form-group mb-4">
+                    <label asp-for="Frequency" class="control-label">Frequency</label>
+                    <select asp-for="Frequency" asp-items="Html.GetEnumSelectList<HabitFrequency>()" class="form-control">
+                        <option value="">-- Select Frequency --</option>
+                    </select>
+                    <span asp-validation-for="Frequency" class="text-danger"></span>
+                </div>
+
+                <!-- Log Date Field -->
+                <div class="form-group mb-5">
+                    <label asp-for="LogDate" class="control-label">Start Date</label>
+                    <input asp-for="LogDate" class="form-control" type="date" />
+                    <span asp-validation-for="LogDate" class="text-danger"></span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="form-group text-center mb-3">
+                    <button type="submit" class="btn btn-success btn-lg">Add Habit</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,236 @@
+﻿@using MoodScape.Data.Enums
+@using MoodScape.Logic.Utils
+
+@model MoodScape.Web.ViewModels.MoodAnalysisVM
+
+@{
+    ViewData["Title"] = "🍉 Your Mood Entries 🍉";
+}
+
+<video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" class="video-background">
+    <source src="~/assets/animation8-vertical.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<section id="mood-analysis-section" class="mt-4">
+    <div class="mood-analysis-content">
+        <div class="text-center">
+            <h2 class="section-title">Mood Diary</h2>
+            <p>Your mood analysis based on recent data.</p>
+
+            <div class="chart-container">
+                <button type="button" class="btn info-modal-btn" data-bs-toggle="modal" data-bs-target="#moodInfoModal">
+                    Summary
+                </button>
+
+                <div class="modal fade" id="moodInfoModal" tabindex="-1" aria-labelledby="moodInfoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="moodInfoModalLabel">Mood Summary for @Model.AnalysisResult.VisualizationData.SelectedTimePeriod.ToFriendlyString()</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mood-summary-stats">
+                                    <div><strong>Total Entries:</strong> @Model.AnalysisResult.VisualizationData.TotalEntries</div>
+                                    <div><strong>Positive Entries:</strong> @Model.AnalysisResult.VisualizationData.PositiveEntries (@Math.Round((double)Model.AnalysisResult.VisualizationData.PositiveEntries / Model.AnalysisResult.VisualizationData.TotalEntries * 100, 2)%)</div>
+                                    <div><strong>Negative Entries:</strong> @Model.AnalysisResult.VisualizationData.NegativeEntries (@Math.Round((double)Model.AnalysisResult.VisualizationData.NegativeEntries / Model.AnalysisResult.VisualizationData.TotalEntries * 100, 2)%)</div>
+                                    <div><strong>Average Mood Level:</strong> @Model.AnalysisResult.VisualizationData.PeriodAverageMood (on a scale of 1 to 10)</div>
+                                    <div><strong>Mood Trend:</strong> @Model.AnalysisResult.VisualizationData.MoodTrend</div>
+                                    <div><strong>Sentiment Trend:</strong> @Model.AnalysisResult.VisualizationData.SentimentTrend</div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="dropdown-container">
+                    <form id="timePeriodForm" asp-action="UpdatePeriod" asp-controller="Mood" method="post">
+                        <select id="timePeriodSelect" name="selectedPeriod" onchange="document.getElementById('timePeriodForm').submit();">
+                            @foreach (var timePeriod in Enum.GetValues(typeof(TimePeriod)))
+                            {
+                                var friendlyName = "";
+                                switch ((TimePeriod)timePeriod)
+                                {
+                                    case TimePeriod.OneWeek:
+                                        friendlyName = "1 Week";
+                                        break;
+                                    case TimePeriod.OneMonth:
+                                        friendlyName = "1 Month";
+                                        break;
+                                    case TimePeriod.ThreeMonths:
+                                        friendlyName = "3 Months";
+                                        break;
+                                    case TimePeriod.SixMonths:
+                                        friendlyName = "6 Months";
+                                        break;
+                                    case TimePeriod.OneYear:
+                                        friendlyName = "1 Year";
+                                        break;
+                                    default:
+                                        friendlyName = timePeriod.ToString();
+                                        break;
+                                }
+                                <!option value="@timePeriod" @(Model.AnalysisResult.VisualizationData.SelectedTimePeriod == (TimePeriod)timePeriod ? "selected" : "" )>@friendlyName</!option>
+                            }
+                        </select>
+                    </form>
+                </div>
+
+                <canvas id="moodChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.AnalysisResult.NotificationPrompt.ShouldNotify)
+    {
+        <button type="button" class="btn btn-primary notify-btn" data-bs-toggle="modal" data-bs-target="#notificationModal">Need to Talk ?</button>
+
+        <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="notificationModalLabel">Notify Someone</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>@Model.AnalysisResult.NotificationPrompt.RecommendationMessage</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="@Model.AnalysisResult.NotificationPrompt.MailToLink" class="btn btn-warning">Send Email</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+<section id="mood-overview-section" class="container mb-5">
+    <div class="row mt-4">
+        @foreach (var mood in Model.Moods)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card card-mood" data-bs-toggle="modal" data-bs-target="#moodModal-@mood.Id">
+                    <div class="card-header card-header-mood">
+                        <h5 class="mood-date">@mood.LogDate.ToString("dd MMM, yyyy")</h5>
+                    </div>
+                    <div class="card-body card-body-mood">
+                        <p class="card-text mood-description">
+                            @{
+                                var description = mood.Description.Length > 30 ? mood.Description.Substring(0, 30) + "..." : mood.Description;
+                            }
+                            @description
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="moodModal-@mood.Id" tabindex="-1" aria-labelledby="moodModalLabel-@mood.Id" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="moodModalLabel-@mood.Id">Mood Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body mood-summary-stats">
+                            <div><strong>Mood Level:</strong> @mood.MoodLevel</div>
+                            <div>@mood.Description</div>
+                        </div>
+                        <div class="modal-footer">
+                            <a asp-action="Update" asp-route-id="@mood.Id" class="btn btn-mood-edit">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@mood.Id" class="btn btn-mood-delete">Delete</a>
+                            <a asp-action="GenerateInsights" asp-route-id="@mood.Id" class="btn btn-mood-insights">Get Insights</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('moodChart').getContext('2d');
+    var moodChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.AnalysisResult.VisualizationData.Labels)),
+            datasets: [{
+                label: 'Positive Sentiment',
+                data: @Html.Raw(Json.Serialize(Model.AnalysisResult.VisualizationData.PositiveConfidence)),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false
+            }, {
+                label: 'Negative Sentiment',
+                data: @Html.Raw(Json.Serialize(Model.AnalysisResult.VisualizationData.NegativeConfidence)),
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false
+            }, {
+                label: 'Average Mood Level',
+                data: @Html.Raw(Json.Serialize(Model.AnalysisResult.VisualizationData.DailyAverageMoodLevels)),
+                type: 'line',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false,
+                yAxisID: 'y1'
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Average Confidence Score'
+                    }
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: 'Average Mood Level'
+                    },
+                    suggestedMin: 1,
+                    suggestedMax: 10
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    },
+                    ticks: {
+                        autoSkip: true,
+                        maxRotation: 45,
+                        minRotation: 45
+                    }
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Mood Sentiment Analysis Over Time'
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                },
+            }
+        }
+    });
+</script>
+
+@await Html.PartialAsync("_CreateItem", "Mood")

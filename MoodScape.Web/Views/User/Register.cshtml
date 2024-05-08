@@ -1,0 +1,51 @@
+﻿@model MoodScape.Web.ViewModels.RegisterVM
+
+@{
+    ViewData["Title"] = "🥥Register🥥";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow mb-5">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Create Your Account</h3>
+                    <form asp-action="Register" method="post">
+                        <!-- Username Field -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Username" class="control-label">Username</label>
+                            <input asp-for="Username" class="form-control" placeholder="Choose a username" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="control-label">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Password" class="control-label">Password</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Create a password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <!-- Confirm Password Field -->
+                        <div class="form-group mb-4">
+                            <label asp-for="ConfirmPassword" class="control-label">Confirm Password</label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

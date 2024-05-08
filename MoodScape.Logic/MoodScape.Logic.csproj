@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="IServices\" />
+    <None Remove="Services\" />
+    <None Remove="Analysis\" />
+    <None Remove="Analysis\Models\" />
+    <None Remove="Analysis\Models\Visualization\" />
+    <None Remove="Analysis\Models\Results\" />
+    <None Remove="Analysis\Models\Contact\" />
+    <None Remove="Utils\" />
+    <None Remove="ConversationalAI\" />
+    <None Remove="ConversationalAI\Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="IServices\" />
+    <Folder Include="Services\" />
+    <Folder Include="Analysis\" />
+    <Folder Include="Analysis\Models\" />
+    <Folder Include="Analysis\Models\Visualization\" />
+    <Folder Include="Analysis\Models\Results\" />
+    <Folder Include="Analysis\Models\Contact\" />
+    <Folder Include="Utils\" />
+    <Folder Include="ConversationalAI\" />
+    <Folder Include="ConversationalAI\Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MoodScape.Data\MoodScape.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
+    <PackageReference Include="Microsoft.ML" Version="3.0.0" />
+    <PackageReference Include="Microsoft.ML.FastTree" Version="3.0.0" />
+    <PackageReference Include="Polly" Version="8.2.1" />
+    <PackageReference Include="MockQueryable.Moq" Version="7.0.0" />
+  </ItemGroup>
+</Project>

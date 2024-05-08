@@ -1,0 +1,272 @@
+﻿/*#################### ANALYSIS ####################*/
+
+#mood-analysis-section {
+    color: #FFFFFF;
+    padding: 50px 0;
+    height: calc(100vh - 58px);
+    overflow: hidden;
+  /*overflow: auto; for responsive chart*/
+}
+
+.mood-analysis-content {
+    position: relative;
+    color: #EFEFEF;
+}
+
+    .mood-analysis-content .section-title {
+        font-size: 3em;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .mood-analysis-content p {
+        font-size: 1.2em;
+        margin-bottom: 40px;
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    }
+
+.chart-container {
+    position: relative;
+    width: 80%;
+    height: 500px;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+#timePeriodSelect {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #4A90E2;
+    color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+    #timePeriodSelect option {
+        padding: 5px 10px;
+        background-color: #5A5A5A;
+    }
+
+    #timePeriodSelect:focus {
+        outline: none;
+        border-color: #6db3f2;
+        box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
+    }
+
+    #timePeriodSelect:hover {
+        color: #FFFFFF;
+        background-color: #000435;
+    }
+
+.info-modal-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #4A90E2;
+    color: #FFFFFF;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .info-modal-btn:hover {
+        color: #FFFFFF;
+        background-color: #000435;
+    }
+
+/*#################### MODAL | SUMMARY ####################*/
+
+.modal-content {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border: 1px solid #E0E0E0;
+}
+
+.modal-header {
+    background-color: #5A89E6;
+    color: #FFFFFF;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.btn-close {
+    filter: invert(1);
+}
+
+.modal-body {
+    background-color: #F7F7F7;
+    color: #333333;
+}
+
+.mood-summary-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 20px;
+}
+
+    .mood-summary-stats div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #E9EFF9;
+        color: #333;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+.modal-footer {
+    background-color: #DDE5F1;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+    .modal-footer .btn-secondary {
+        color: #5A89E6;
+        background-color: #FFFFFF;
+        border: 1px solid #5A89E6;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .modal-footer .btn-secondary:hover {
+            background-color: #5A89E6;
+            color: #FFFFFF;
+        }
+
+.notify-btn {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 1;
+}
+
+    .notify-btn:hover {
+        background-color: #000435;
+    }
+
+/*#################### CARDS OVERVIEW ####################*/
+
+#mood-overview-section {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-mood {
+    background-color: #fff;
+    color: #333;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+    .card-mood:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    }
+
+.card-header-mood {
+    background-color: #f8f9fa;
+    color: #333;
+    padding: 10px 20px;
+    font-size: 0.75rem;
+}
+
+    .card-header-mood .mood-date {
+        margin-bottom: 0;
+        font-weight: normal;
+        font-size: 0.7rem;
+        color: #555;
+        display: block;
+    }
+
+.card-body-mood {
+    padding: 20px;
+    background-color: #fff;
+}
+
+    .card-body-mood .mood-description {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+.btn-mood-edit, .btn-mood-delete, .btn-mood-insights {
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    color: white;
+    transition: opacity 0.3s ease;
+}
+
+.btn-mood-edit {
+    background-color: #31708f;
+}
+
+    .btn-mood-edit:hover {
+        background-color: #000435;
+        color: #fff;
+    }
+
+.btn-mood-delete {
+    background-color: #e23d28;
+}
+
+    .btn-mood-delete:hover {
+        background-color: #000435;
+        color: #fff;
+    }
+
+.btn-mood-insights {
+    background-color: #00897b;
+}
+
+    .btn-mood-insights:hover {
+        background-color: #000435;
+        color: #fff;
+    }
+
+/*#################### CHATGPT CONVERSATION ####################*/
+
+.mood-insights-container {
+    background-color: #f0f2f5;
+    padding: 20px 0;
+}
+
+.conversation-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.chat-response {
+    background-color: #ffffff;
+    color: #333;
+}
+
+    .chat-response h4 {
+        margin-bottom: 15px;
+    }
+
+.chat-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

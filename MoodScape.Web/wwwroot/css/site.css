@@ -1,0 +1,112 @@
+﻿html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content-wrapper {
+    flex: 1;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/*#################### SHARED ####################*/
+
+.Home-Index header {
+    position: absolute;
+    width: 100%;
+}
+
+.Home-Index nav, .Mood-Index nav, .Goal-Index nav, .Habit-Index nav {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-bottom: none !important;
+    z-index: 100 !important;
+}
+
+.Mood-Index .nav-link,
+.Mood-Index .navbar-brand {
+    color: #FFF !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+
+.Home-Index nav .nav-link,
+.Home-Index nav .navbar-brand {
+    color: #FFF !important;
+}
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -100;
+}
+
+.Home-Index footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #FFF;
+    width: 100%;
+}
+
+.Mood-Index footer, .Goal-Index footer, .Habit-Index footer {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #FFF;
+}
+
+    .Home-Index footer a, .Mood-Index footer a, .Goal-Index footer a, .Habit-Index footer a {
+        text-decoration: none;
+        color: #777;
+    }
+
+        .Home-Index footer a:hover, .Mood-Index footer a:hover, .Goal-Index footer a:hover, .Habit-Index footer a:hover {
+            text-decoration: underline;
+            color: #ccc;
+        }
+
+footer {
+    background: #fff;
+    color: #ccc;
+    text-align: center;
+    padding: 1rem 0;
+    bottom: 0;
+    width: 100%;
+    text-decoration: none;
+}
+
+    footer a {
+        color: #000;
+        text-decoration: none;
+    }
+
+        footer a:hover {
+            color: #ccc;
+            text-decoration: underline;
+        }
+
+/*#################### RESPONSIVE ####################*/
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    footer {
+        padding: 1.5rem 0;
+    }
+}

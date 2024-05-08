@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MoodScape.Web.ViewModels.HabitVM>
+
+@{
+    ViewData["Title"] = "🪻 Your Habit Entries 🪻";
+}
+
+<video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" class="video-background">
+    <source src="~/assets/animation7.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<div class="container">
+    <div class="habits-container my-5">
+        <h2 class="text-center habit-title">Habit Journal</h2>
+        <div class="container">
+            @foreach (var habit in Model)
+            {
+                <div class="habit-entry p-4 mb-4">
+                    <div class="habit-header d-flex justify-content-between align-items-center">
+                        <h3 class="habit-name">@habit.Name</h3>
+                        <div>
+                            <a asp-action="Update" asp-route-id="@habit.Id" class="btn btn-habit-edit">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@habit.Id" class="btn btn-habit-delete">Delete</a>
+                        </div>
+                    </div>
+                    <p class="habit-description">@habit.Description</p>
+                    <div class="habit-footer d-flex justify-content-between align-items-center">
+                        <p class="habit-frequency">Frequency: @habit.Frequency</p>
+                        <span class="habit-logdate">@habit.LogDate.ToString("dd MMM yyyy")</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_CreateItem", "Habit")
